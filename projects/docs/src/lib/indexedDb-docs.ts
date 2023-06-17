@@ -1,4 +1,4 @@
-import { delay, first, map, Observable, tap } from "rxjs";
+import { delay, first, map, merge, mergeAll, mergeMap, Observable, of, tap } from "rxjs";
 import { ArrayUnion, Docs, DocsQuery } from "./docs";
 import { OrderBy, TableData, TableQueryWhere, TableFieldPrimitive } from "./table-data-source";
 import { combineLatest } from "rxjs/internal/observable/combineLatest";
@@ -56,18 +56,20 @@ export function toFixtureExport(cs: CollectionPaths): FixtureExport {
 
 export class IndexedDbDocs implements Docs {
 
-  changes = new BehaviorSubject<any>(null)
-  tableChanges = combineLatest([
-    this.changes,
-    this.params.tables,
-  ]).pipe(map(([_, ts]) => ts))
+  changes = new BehaviorSubject<string|null>(null)
 
   constructor(private params: {
     tables: Observable<CollectionPaths>,
   }){}
 
   valueChanges<T extends TableData>(params: DocsQuery): Observable<T[]> {
-    return this.tableChanges.pipe(
+    return merge([
+      this.params.tables,
+      this.changes.pipe(
+        mergeMap(p => p === params.path ? this.params.tables : of())
+      )
+    ]).pipe(
+      mergeAll(),
       map(ts => this._getTableOrThrow(ts, params.path)),
       map(table => {
         const d = Object.values({...table}) as T[]
@@ -78,7 +80,13 @@ export class IndexedDbDocs implements Docs {
   }
 
   count<T extends TableData>(params: DocsQuery): Observable<number> {
-    return this.tableChanges.pipe(
+    return merge([
+      this.params.tables,
+      this.changes.pipe(
+        mergeMap(p => p === params.path ? this.params.tables : of())
+      )
+    ]).pipe(
+      mergeAll(),
       map(ts => this._getTableOrThrow(ts, params.path)),
       map(table => {
         const d = Object.values({...table}) as T[]
@@ -102,7 +110,7 @@ export class IndexedDbDocs implements Docs {
         return id
       }),
       delay(2000),
-      tap(_ => this.changes.next({}))
+      tap(_ => this.changes.next(params.path))
     )
   }
 
@@ -111,8 +119,16 @@ export class IndexedDbDocs implements Docs {
     partial?: TableData,
     arrayUnion?: ArrayUnion,
   }): Observable<void> {
-    throw new Error('not implemented')
-  }
+    return this.params.tables.pipe(
+      first(),
+      map(ts => {
+        const [collection, id] = this.parsePath(params.path)
+        const t = this._getTableOrThrow(ts, collection)
+        const n = {...t[id] as TableData, ...params.partial, id}
+        t[id] = n
+      }),
+      tap(_ => this.changes.next(this.parsePath(params.path)[0])))
+    }
 
   replaceById(params: {
     path: string,
@@ -126,7 +142,7 @@ export class IndexedDbDocs implements Docs {
         const n = {...params.doc, id}
         t[id] = n
       }),
-      tap(_ => this.changes.next({}))
+      tap(_ => this.changes.next(this.parsePath(params.path)[0]))
     )
   }
 
@@ -140,7 +156,7 @@ export class IndexedDbDocs implements Docs {
       map((t) => {
         delete t[id]
       }),
-      tap(_ => this.changes.next({}))
+      tap(_ => this.changes.next(this.parsePath(params.path)[0]))
     )
   }
 
