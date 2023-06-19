@@ -1,6 +1,6 @@
 import { delay, first, map, merge, mergeAll, mergeMap, Observable, of, tap } from "rxjs";
 import { ArrayUnion, Docs, DocsQuery } from "./docs";
-import { OrderBy, TableData, TableQueryWhere, TableFieldPrimitive } from "./table-data-source";
+import { OrderBy, TableData, DocsQueryWhere, TableFieldPrimitive } from "./table-data-source";
 import { combineLatest } from "rxjs/internal/observable/combineLatest";
 import { BehaviorSubject } from "rxjs/internal/BehaviorSubject";
 
@@ -201,14 +201,14 @@ export class IndexedDbDocs implements Docs {
     return f
   }
 
-  private filterAnd<T extends TableData>(f: T[], a: TableQueryWhere[]) {
+  private filterAnd<T extends TableData>(f: T[], a: DocsQueryWhere[]) {
     for (const q of a) {
       f = this.filter(f, q)
     }
     return f
   }
 
-  private filter<T extends TableData>(f: T[], q: TableQueryWhere): T[] {
+  private filter<T extends TableData>(f: T[], q: DocsQueryWhere): T[] {
     const operator = q[1]
     if (operator === '==') {
       return [...f.filter(r => r[q[0]] === q[2])]

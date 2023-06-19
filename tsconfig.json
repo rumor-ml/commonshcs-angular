@@ -4,8 +4,11 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "docs": [
-        "dist/docs"
+      "@angular/*": [
+        "./node_modules/@angular/*"
+      ],
+      "@commonshcs-angular": [
+        "../commonshcs-angular/projects/docs/src/public-api.ts"
       ]
     },
     "outDir": "./dist/out-tsc",
