@@ -2,7 +2,17 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { OrderBy, TableData } from './table-data-source';
 
-export type Query = string
+export type Query = {
+  q: Filter,
+  include: Filter[],
+  exclude: Filter[],
+}
+
+export type Filter = {
+  column: string,
+  value: string,
+  keyword: boolean,
+}
 
 export interface SearchParameters {
   index?: string,
