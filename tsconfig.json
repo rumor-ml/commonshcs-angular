@@ -8,7 +8,7 @@
         "./node_modules/@angular/*"
       ],
       "@commonshcs-angular": [
-        "../commonshcs-angular/projects/docs/src/public-api.ts"
+        "projects/commonshcs-angular/src/public-api.ts"
       ]
     },
     "outDir": "./dist/out-tsc",
