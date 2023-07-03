@@ -1,5 +1,5 @@
 import { delay, first, map, merge, mergeAll, mergeMap, Observable, of, tap } from "rxjs";
-import { ArrayUnion, Docs, DocsQuery } from "./docs";
+import { ArrayUnion, DocsService, DocsQuery } from "./docs";
 import { OrderBy, TableData, DocsQueryWhere, TableFieldPrimitive } from "./table-data-source";
 import { combineLatest } from "rxjs/internal/observable/combineLatest";
 import { BehaviorSubject } from "rxjs/internal/BehaviorSubject";
@@ -54,7 +54,7 @@ export function toFixtureExport(cs: CollectionPaths): FixtureExport {
   }, {} as FixtureExport)
 }
 
-export class IndexedDbDocs implements Docs {
+export class IndexedDbDocs implements DocsService {
 
   changes = new BehaviorSubject<string|null>(null)
 
@@ -190,7 +190,8 @@ export class IndexedDbDocs implements Docs {
       this.order(f, q.orderBy)
     }
     if (q.startAfter) {
-      const i = f.findIndex(r => r[q.idField] === q.startAfter![q.idField])
+      const id = q.idField ?? 'id'
+      const i = f.findIndex(r => r[id] === q.startAfter![id])
       if (i) {
         f.splice(0, i+1)
       }

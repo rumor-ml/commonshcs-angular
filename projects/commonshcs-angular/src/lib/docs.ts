@@ -3,14 +3,14 @@ import { TableData, DocsDelegateQuery, TableDataService, DocsQueryWhere, TableFi
 
 export type DocsQuery = DocsDelegateQuery & {
   path: string,
-  idField: string,
+  idField?: string,
 }
 
 export type ArrayUnion = {
   [key: string]: TableFieldValue[]
 }
 
-export interface Docs {
+export interface DocsService {
   
   valueChanges: {
    <T extends TableData>(params: DocsQuery)
@@ -64,7 +64,7 @@ export interface Docs {
 export abstract class DocsDelegate<T extends TableData> implements TableDataService<T, DocsDelegateQuery> {
 
   constructor(private params: {
-      docs: Docs,
+      docs: DocsService,
       path: string,
       idField: string,
       where?: Observable<DocsQueryWhere[] | null>

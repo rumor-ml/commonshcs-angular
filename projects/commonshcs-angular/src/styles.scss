@@ -2,7 +2,7 @@
 @use '@angular/material' as mat;
 @include mat.core();
 
-$perseus-primary-palette: (
+$primary-palette: (
  50: #dfefff,
  100: #bdd8ed,
  200: #9ebbd5,
@@ -27,33 +27,33 @@ $perseus-primary-palette: (
  )
 );
 
-$perseus-accent-palette: mat.$orange-palette;
+$accent-palette: mat.$orange-palette;
 
-$perseus-primary: mat.define-palette($perseus-primary-palette, 800, 300, 900, 700);
-$perseus-accent: mat.define-palette($perseus-accent-palette);
-$perseus-warn: mat.define-palette(mat.$red-palette);
+$primary: mat.define-palette($primary-palette, 800, 300, 900, 700);
+$accent: mat.define-palette($accent-palette);
+$warn: mat.define-palette(mat.$red-palette);
 $typography: mat.define-typography-config(
   $font-family: 'Raleway',
 );
 
 
-$perseus-light-theme: mat.define-light-theme((
+$light-theme: mat.define-light-theme((
   color: (
-    primary: $perseus-primary,
-    accent: $perseus-accent,
-    warn: $perseus-warn,
+    primary: $primary,
+    accent: $accent,
+    warn: $warn,
   )
 ));
 
-$perseus-dark-theme: mat.define-dark-theme((
+$dark-theme: mat.define-dark-theme((
   color: (
-    primary: $perseus-primary,
-    accent: $perseus-accent,
-    warn: $perseus-warn,
+    primary: $primary,
+    accent: $accent,
+    warn: $warn,
   )
 ));
 
-@include mat.all-component-themes($perseus-light-theme);
+@include mat.all-component-themes($light-theme);
 @include mat.all-component-typographies($typography);
 
 html, body { height: 100%; }
@@ -61,8 +61,8 @@ body {
   margin: 0; 
   font-family: Raleway, "Helvetica Neue", sans-serif; 
   
-  --primary: #{mat.get-color-from-palette($perseus-primary)};
-  --accent: #{mat.get-color-from-palette($perseus-accent)};
+  --primary: #{mat.get-color-from-palette($primary)};
+  --accent: #{mat.get-color-from-palette($accent)};
 }
 
 .expandable-row {
@@ -74,7 +74,7 @@ body {
 }
 
 .expandable-row.action:hover, .selectable-row:hover {
-  background-color: mat.get-color-from-palette($perseus-primary, 50) !important;
+  background-color: mat.get-color-from-palette($primary, 50) !important;
 }
 
 .expandable-row td {
@@ -137,13 +137,13 @@ body {
 //--- Move these to per component scss files by moving paletts to a common module.
 
 .toolbar {
-  background: map.get(map.get($perseus-dark-theme, 'background'), 'background') !important;
+  background: map.get(map.get($dark-theme, 'background'), 'background') !important;
 }
 
-.hamburger {
-  color: map.get(map.get($perseus-dark-theme, 'foreground'), 'text') !important;
+.hamburger, .home {
+  color: map.get(map.get($dark-theme, 'foreground'), 'text') !important;
 }
 
 .vocabulary-stepper .mat-step-icon {
-  color: mat.get-color-from-palette($perseus-accent) !important;
+  color: mat.get-color-from-palette($accent) !important;
 }

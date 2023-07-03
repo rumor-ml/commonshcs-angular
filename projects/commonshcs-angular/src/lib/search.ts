@@ -4,14 +4,14 @@ import { OrderBy, TableData } from './table-data-source';
 
 export type Query = {
   q: Filter,
-  include: Filter[],
-  exclude: Filter[],
+  include?: Filter[],
+  exclude?: Filter[],
 }
 
 export type Filter = {
-  column: string,
+  column?: string,
   value: string,
-  keyword: boolean,
+  keyword?: boolean,
 }
 
 export interface SearchParameters {
