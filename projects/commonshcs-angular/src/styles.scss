@@ -63,6 +63,12 @@ body {
   
   --primary: #{mat.get-color-from-palette($primary)};
   --accent: #{mat.get-color-from-palette($accent)};
+
+  --primary-200: #{mat.get-color-from-palette($primary, 200)};
+  --primary-300: #{mat.get-color-from-palette($primary, 300)};
+  --accent-100: #{mat.get-color-from-palette($accent, 100)};
+  --accent-200: #{mat.get-color-from-palette($accent, 200)};
+
 }
 
 .expandable-row {
@@ -88,6 +94,7 @@ body {
 	padding: 0px;
 	// margin: auto;
 	// width: 80%;
+  margin-top: var(--toolbar-height);
 }
 
 .crumb-trail:after {
@@ -100,7 +107,6 @@ body {
 	padding: 4px 16px;
 	position: relative;
 }
-
 
 .crumb:not(:last-child):before,
 .crumb:not(:last-child):after {
@@ -121,6 +127,7 @@ body {
 	-webkit-transform: rotate(60deg);
 	transform: rotate(60deg);
 }
+
 .crumb:after {
 	bottom: 6px;
 	-moz-transform: rotate(120deg);
@@ -134,16 +141,25 @@ body {
   float: left !important;
 }
 
-//--- Move these to per component scss files by moving paletts to a common module.
-
-.toolbar {
-  background: map.get(map.get($dark-theme, 'background'), 'background') !important;
+.block {
+  display: flex;
+  padding-top: 64px;
+  margin-left: 64px;
+  margin-right: 64px;
 }
 
-.hamburger, .home {
-  color: map.get(map.get($dark-theme, 'foreground'), 'text') !important;
-}
+// .toolbar {
+//   background: map.get(map.get($dark-theme, 'background'), 'background') !important;
+// }
 
-.vocabulary-stepper .mat-step-icon {
+// .home {
+//   color: map.get(map.get($dark-theme, 'foreground'), 'text') !important;
+// }
+
+// .hamburger .mat-icon {
+//   color: mat.get-color-from-palette($primary) !important;
+// }
+
+.mat-step-icon {
   color: mat.get-color-from-palette($accent) !important;
 }
