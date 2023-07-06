@@ -69,6 +69,8 @@ body {
   --accent-100: #{mat.get-color-from-palette($accent, 100)};
   --accent-200: #{mat.get-color-from-palette($accent, 200)};
 
+  --background-dark: #{map.get(map.get($dark-theme, 'background'), 'background')};
+  --background-light: #{map.get(map.get($light-theme, 'background'), 'background')};
 }
 
 .expandable-row {
