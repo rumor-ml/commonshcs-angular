@@ -72,7 +72,10 @@ export class IndexedDbDocs implements DocsService {
       mergeAll(),
       map(ts => this._getTableOrThrow(ts, params.path)),
       map(table => {
-        const d = Object.values({...table}) as T[]
+        const d = Object.entries({...table}).map(([k, v]) => {
+          (v as any)['id'] = k
+          return v
+        }) as T[]
         const f = this.filterMemory<T>(d, params)
         return f
       }),
@@ -159,6 +162,22 @@ export class IndexedDbDocs implements DocsService {
       tap(_ => this.changes.next(this.parsePath(params.path)[0]))
     )
   }
+
+  // columns(params: {
+  //   path: string
+  // }): Observable<string[]> {
+  //   return this.valueChanges({
+  //     path: params.path
+  //   }).pipe(
+  //     map(rs => {
+  //       if (rs && rs[0]) {
+  //         return Object.keys(rs[0])
+  //       } else {
+  //         return []
+  //       }
+  //     })
+  //   )
+  // }
 
   parsePath(path: string): [string, string] {
     const segments = path.split('/')

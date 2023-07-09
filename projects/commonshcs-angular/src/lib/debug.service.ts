@@ -1,6 +1,5 @@
 import { Router } from '@angular/router';
 import { CollectionPaths } from './indexedDb-docs';
-import { BehaviorSubject } from 'rxjs';
 
 export interface Fixture {
   id: string,
@@ -24,8 +23,10 @@ export class DebugService {
   }
 
   loadFixture(f: Fixture) {
+    // TODO: https://stackoverflow.com/questions/41280471/how-to-implement-routereusestrategy-shoulddetach-for-specific-routes-in-angular
     this.router.navigate(f.path, {
-      queryParams: f.queryParams
+      queryParams: f.queryParams,
+      onSameUrlNavigation: 'reload'
     })
     console.log(f)
   }

@@ -52,6 +52,12 @@ export interface DocsService {
     }): Observable<void>
   }
 
+  // columns: {
+  //   (params: {
+  //     path: string
+  //   }): Observable<string[]>
+  // }
+
 }
 
 /**
