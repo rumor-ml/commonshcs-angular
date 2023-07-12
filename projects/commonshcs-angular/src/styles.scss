@@ -73,6 +73,11 @@ body {
   --background-light: #{map.get(map.get($light-theme, 'background'), 'background')};
 }
 
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
 .expandable-row {
   height: 0 !important;
 }
@@ -148,6 +153,7 @@ body {
   padding-top: 64px;
   margin-left: 64px;
   margin-right: 64px;
+  width: calc(100% - 128px)
 }
 
 // .toolbar {
