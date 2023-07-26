@@ -1,4 +1,4 @@
-import { BehaviorSubject } from "rxjs"
+import { BehaviorSubject, Observable } from "rxjs"
 
 export interface User {
   uid: string,
@@ -11,4 +11,5 @@ export interface AuthService {
 
   user: BehaviorSubject<User | null>
 
+  signInAnonymously: () => Observable<User>
 }
