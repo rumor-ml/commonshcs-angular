@@ -106,6 +106,12 @@ body {
   margin-top: var(--toolbar-height);
 }
 
+.crumb-trail-top {
+  position: fixed;
+  width: 100%;
+  z-index: 99;
+}
+
 .crumb-trail:after {
   content: "";
   display: table;

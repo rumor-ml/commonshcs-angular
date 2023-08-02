@@ -10,6 +10,7 @@ export interface User {
 export interface AuthService {
 
   user: BehaviorSubject<User | null>
-
+  isAnonymous: Observable<boolean>
+  
   signInAnonymously: () => Observable<User>
 }
