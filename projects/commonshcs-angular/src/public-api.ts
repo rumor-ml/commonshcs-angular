@@ -10,3 +10,6 @@ export * from './lib/indexedDb-docs';
 export * from './lib/auth';
 export * from './lib/media-debugger/media-debugger.component'
 export * from './lib/debug.service'
+export * from './lib/duckdb-sql.service'
+export * from './lib/duckdb-client'
+
